@@ -1,0 +1,66 @@
+---
+title: "Task-4"
+author: "Nursima Çalık"
+date: "2026-10-09"
+output: html_document
+---
+
+## Import the Data 
+```{r}
+library(dplyr)
+library(readxl)
+figure6 <- read_excel("Figure 6 Source data.xlsx", sheet = "Figure 6f")
+colnames(figure6) <- c("Trials", "Vehicle", "CTPI2")
+figure6 <- figure6[-1, ]
+```
+
+## Examine the Data
+```{r}
+dim(figure6)
+str(figure6)
+head(figure6)
+is.na(figure6)
+```
+
+## Reproduce Figure 6f 
+```{r}
+library(ggplot2)
+figure6$Trials <- factor(figure6$Trials, levels = c("Trial 1", "Trial 2", "Trial 3", "Trial 4", "Trial 5","Trial 6", "Trial 7", "Trial 8", "Trial 9", "Trial 10"))
+
+str(figure6)
+figure6$Vehicle <- as.numeric(figure6$Vehicle)
+figure6$CTPI2 <- as.numeric(figure6$CTPI2)
+
+fig6f<- ggplot(data = figure6, mapping = aes(x= Trials, group = 1))+
+  geom_point(aes(y = Vehicle, color = "vehicle", size = "size"))+
+  geom_line(aes(y = Vehicle, linewidth = "lw", color = "vehicle")) +
+  geom_point(aes(y = CTPI2, size = "size", color = "CTPI2"))+
+  geom_line(aes(y = CTPI2, linewidth = "lw", color = "CTPI2"))+
+  scale_y_continuous(limits = c(0,100), breaks = seq(0,100, by = 20), expand = c(0.004,0))+
+  scale_color_manual(values = c("vehicle"="black", "CTPI2" = "green"))+
+  scale_linewidth_manual(values = c("lw"=0.5))+
+  scale_size_manual(values = c("size"= 3))+
+  labs(title = "f", x= "Trials", y = "Percentage of mice hanging 90 s (hanging test)")+
+  guides(size = FALSE, linewidth = FALSE) +
+  theme_minimal()+
+  theme(axis.text.x = element_text(angle = 45)) +
+  theme(panel.grid.minor = element_blank(), panel.grid.major = element_blank(), axis.line = element_line(color = "black"), axis.ticks = element_line(color = "black"))+
+  theme(plot.title = element_text(size = 15, face = "bold")) +
+  theme(legend.position = "inside",
+        legend.position.inside = c(0.15,0.85)) 
+
+print(fig6f)
+ggsave("figure6f/fig6f.pdf")
+
+```
+
+
+
+
+
+
+
+
+  
+
+
