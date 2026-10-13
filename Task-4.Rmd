@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ## Import the Data 
+After importing the data, untidy columns and rows were fixed and renamed again. Meaningless row was deleted. [1-3]
 ```{r}
 library(dplyr)
 library(readxl)
@@ -15,6 +16,7 @@ figure6 <- figure6[-1, ]
 ```
 
 ## Examine the Data
+When examination of data was completed , data was ready for reproducing figure 6f.
 ```{r}
 dim(figure6)
 str(figure6)
@@ -23,6 +25,7 @@ is.na(figure6)
 ```
 
 ## Reproduce Figure 6f 
+when the figure was first plotted , x axis ticks labels such as Trial 1 were not on the x axis sequentially then "factor" was used for sorting trials. Structure of  vehicle and CTPI2 were changed to numeric from character. Then The figure was reproduced to best resemble the original. Attention was paid to some point ; limits of axis, sorting Trials, arrangement of line width and point size properly, angle of x axis labels, removal of grids , editing title and legend. Also, in the beginning of plotting code "group = 1" is used because trials were factor structure so plot line could not be drawn , it was necessary to tell ggplot2 that it should treat all trials as part of the same group. [4-12]
 ```{r}
 library(ggplot2)
 figure6$Trials <- factor(figure6$Trials, levels = c("Trial 1", "Trial 2", "Trial 3", "Trial 4", "Trial 5","Trial 6", "Trial 7", "Trial 8", "Trial 9", "Trial 10"))
@@ -54,8 +57,19 @@ ggsave("figure6f/fig6f.pdf")
 
 ```
 
-
-
+## Resources
+1-	https://campus.datacamp.com/courses/introduction-to-importing-data-in-r/importing-excel-data?ex=3
+2-	https://stackoverflow.com/questions/6081439/changing-column-names-of-a-data-frame
+3-	https://www.youtube.com/watch?v=JISBGZIpyFI 
+4-	https://forum.posit.co/t/how-to-order-and-visualize-x-axis-variables-in-ggplot2/163390
+5-	https://www.youtube.com/watch?v=2byZx6hz87Y
+6-	https://stackoverflow.com/questions/22818899/setting-y-axis-breaks-in-ggplot
+7-	https://www.datanovia.com/learn/data-visualization/ggplot2/axis-ticks
+8-	https://www.reddit.com/r/RStudio/comments/wwhm52/ggplot_graphs_cant_make_lineplot/
+9-	https://www.youtube.com/watch?v=RdjKuK938Qs
+10-	https://www.geeksforgeeks.org/r-language/remove-legend-in-ggplot2-in-r/
+11-	https://r-statistics.co/ggplot2-Legends-in-R.html
+12-	https://r-statistics.co/ggplot2-element_line-in-R.html
 
 
 
